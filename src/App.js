@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPrint,
+  faStepForward,
+  faDownload,
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+} from '@fortawesome/free-solid-svg-icons';
+
+library.add(
+  faPrint,
+  faStepForward,
+  faDownload,
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleLeft,
+  faAngleDoubleRight
+);
 
 function dayToString(day) {
   return [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
-    'Sunday',
   ][day];
 }
 
@@ -35,42 +56,55 @@ class DateDisplay extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      date: new Date(),
+    };
+    this.shiftDay = this.shiftDay.bind(this);
+  }
+
+  shiftDay(days) {
+    const newDate = this.state.date;
+    newDate.setDate(newDate.getDate() + days);
+    this.setState({
+      date: newDate,
+    });
+    console.log(this.state.date);
   }
 
   render() {
-    const date = new Date();
+    const { date } = this.state;
     return (
       <div>
-        <ShiftDay direction="backward" />
+        <button onClick={() => this.shiftDay(-7)} className="dateControlButton">
+          <FontAwesomeIcon icon="angle-double-left" />
+        </button>
+        <button onClick={() => this.shiftDay(-1)} className="dateControlButton">
+          <FontAwesomeIcon icon="angle-left" />
+        </button>
         {dayToString(date.getDay())}, {monthToString(date.getMonth())}{' '}
         {date.getDate()}, {date.getFullYear()}
-        <ShiftDay direction="forward" />
+        <button onClick={() => this.shiftDay(1)} className="dateControlButton">
+          <FontAwesomeIcon icon="angle-right" />
+        </button>
+        <button onClick={() => this.shiftDay(7)} className="dateControlButton">
+          <FontAwesomeIcon icon="angle-double-right" />
+        </button>
       </div>
     );
   }
 }
 
-function ShiftDay(props) {
-  const dir = props.direction;
-  if (dir === 'forward') {
-    return <button>{'>'}</button>;
-  } else if (dir === 'backward') {
-    return <button>{'<'}</button>;
-  }
-}
-
-function ListControlPanel(props) {
+function ControlPanel(props) {
   return (
     <div>
       <button className="controlPanelButton" onClick={e => console.log(e)}>
-        Shift All Tasks Forward
+        <FontAwesomeIcon icon="step-forward" />
       </button>
       <button className="controlPanelButton" onClick={e => console.log(e)}>
-        Print Tasks
+        <FontAwesomeIcon icon="print" />
       </button>
       <button className="controlPanelButton" onClick={e => console.log(e)}>
-        Download Tasks (.txt)
+        <FontAwesomeIcon icon="download" />
       </button>
     </div>
   );
@@ -91,12 +125,13 @@ class Task extends Component {
 
   render() {
     return (
-      <form>
-        <input type="checkbox" />
+      <form className="task">
+        <input type="checkbox" className="checkbox" />
         <input
           type="text-field"
           defaultValue="Enter task here..."
           onFocus={this.selectText}
+          className="taskDescription"
         />
       </form>
     );
@@ -128,7 +163,9 @@ class TaskList extends Component {
         {this.state.tasks.map(task => (
           <span key={task.props.id}>{task}</span>
         ))}
-        <button onClick={this.addTask}>+</button>
+        <button onClick={this.addTask} className="addTask">
+          +
+        </button>
       </div>
     );
   }
@@ -142,9 +179,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">My Shift List 💩</h1>
         </header> */}
-        <DateDisplay />
-        <TaskList />
-        <ListControlPanel />
+        <DateDisplay className="dateDisplay" />
+        <TaskList className="taskList" />
+        <ControlPanel className="controlPanel" />
       </div>
     );
   }
