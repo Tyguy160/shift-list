@@ -142,7 +142,7 @@ class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numTasks: 1,
+      numTasks: 0,
       tasks: [],
     };
     this.addTask = this.addTask.bind(this);
@@ -180,7 +180,9 @@ class App extends Component {
           <h1 className="App-title">My Shift List 💩</h1>
         </header> */}
         <DateDisplay className="dateDisplay" />
+        <br />
         <TaskList className="taskList" />
+        <br />
         <ControlPanel className="controlPanel" />
       </div>
     );
