@@ -7,10 +7,14 @@ class TaskContainer extends Component {
     super(props);
 
     this.state = {
-      taskLists: {
-        dates: [],
-        lists: [],
-      },
+      dates: [],
+      lists: [
+        {
+          taskDescription: [],
+          taskID: [],
+          taskStatus: [],
+        },
+      ],
       currentList: [],
       currentDate: new Date(
         new Date().getFullYear(),
@@ -22,13 +26,13 @@ class TaskContainer extends Component {
 
   // Handles incrementing or decrementing days
   changeDate = days => {
-    // console.log(`Changed date by ${days} days`);
+    console.log(`Changed date by ${days} days`);
 
     // Pull the current date from state
     const newDate = new Date(this.state.currentDate);
-    // console.log(
-    //   `Before change date: ${this.state.currentDate.toLocaleDateString()}`
-    // );
+    console.log(
+      `Before change date: ${this.state.currentDate.toLocaleDateString()}`
+    );
 
     // Add or sub days from current date
     newDate.setDate(newDate.getDate() + days);
@@ -39,6 +43,9 @@ class TaskContainer extends Component {
 
     // Add the new date to the list of dates
     this.addDate(newDate);
+
+    // Add the day's list to the list array
+    this.addList();
   };
 
   // Change the current date to the new date
@@ -48,9 +55,9 @@ class TaskContainer extends Component {
         currentDate: new Date(date),
       },
       () => {
-        // console.log(
-        //   `Current date set to ${this.state.currentDate.toLocaleDateString()}!`
-        // );
+        console.log(
+          `Current date set to ${this.state.currentDate.toLocaleDateString()}`
+        );
       }
     );
   };
@@ -58,47 +65,49 @@ class TaskContainer extends Component {
   // If the date is not in the state's list of dates, add it in
   addDate = date => {
     if (
-      !this.state.taskLists.dates
+      !this.state.dates
         .map(dateFromArray => dateFromArray.toLocaleDateString())
         .includes(date.toLocaleDateString())
     ) {
       this.setState(
         {
-          taskLists: {
-            dates: [...this.state.taskLists.dates, date],
-            lists: [...this.state.taskLists.lists, []],
-          },
+          dates: [...this.state.dates, date],
+          lists: { ...this.state.lists },
         },
         () => {
-          // DEBUGGING: Print all dates in list
-          // this.state.dates.map(dateFromArray =>
-          //   console.log(dateFromArray.toLocaleDateString())
-          // );
-          console.log(this.state.taskLists);
+          console.log(this.state);
+          // Update current task list to show date's task list
+          // console.log(this.state.lists[this.state.dates.indexOf(date)]);
+          // this.setCurrentList(this.state.lists[this.state.dates.indexOf(date)]);
         }
       );
     }
   };
 
-  addListToTaskList = list => {
-    console.log(
-      `Current date: ${this.state.currentDate.toLocaleDateString()}\nList of dates:${this.state.taskLists.dates.map(
-        date => date.toLocaleDateString()
-      )}\nIndex of current date: ${this.state.taskLists.dates
-        .map(date => date.toLocaleDateString())
-        .indexOf(this.state.currentDate.toLocaleDateString())}`
-    );
-    this.setState({
-      taskLists: {
-        ...this.state.taskLists,
-        lists: [...this.state.taskLists.lists, list],
-      },
-    });
-  };
+  addTask() {
+    console.log('Added task');
+  }
 
-  updateList = list => {
+  addList() {
+    console.log('Added new list');
+    this.setState({
+      lists: [
+        ...this.state.lists,
+        {
+          taskDescription: [],
+          taskID: [],
+          taskStatus: [],
+        },
+      ],
+    });
+  }
+
+  setCurrentList = list => {
     console.log(`Updated list`);
     console.log(list);
+    this.setState({
+      currentList: list,
+    });
   };
 
   // Before mounting the component, initialize the tasklist
@@ -113,7 +122,7 @@ class TaskContainer extends Component {
         <DateDisplay
           className="dateDisplay"
           currentDate={this.state.currentDate}
-          dates={this.state.taskLists.dates}
+          dates={this.state.dates}
           changeDate={this.changeDate}
           addDate={this.addDate}
           setCurrentDate={this.setCurrentDate}
@@ -122,9 +131,9 @@ class TaskContainer extends Component {
         <TaskList
           className="taskList"
           currentList={this.state.currentList}
-          lists={this.state.taskLists.lists}
-          updateList={this.updateList}
-          addListToTaskList={this.addListToTaskList}
+          lists={this.state.lists}
+          setCurrentList={this.setCurrentList}
+          addTask={this.addTask}
         />
       </div>
     );

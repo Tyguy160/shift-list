@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -46,29 +46,26 @@ function monthToString(month) {
   ][month];
 }
 
-class DateDisplay extends Component {
-
-  render() {
-    const date = this.props.currentDate;
+function DateDisplay(props){
+    const date = props.currentDate;
     return (
       <div>
-        <button onClick={() => this.props.changeDate(-7)} className="dateControlButton">
+        <button onClick={() => props.changeDate(-7)} className="dateControlButton">
           <FontAwesomeIcon icon="angle-double-left" />
         </button>
-        <button onClick={() => this.props.changeDate(-1)} className="dateControlButton">
+        <button onClick={() => props.changeDate(-1)} className="dateControlButton">
           <FontAwesomeIcon icon="angle-left" />
         </button>
         {dayToString(date.getDay())}, {monthToString(date.getMonth())}{' '}
         {date.getDate()}, {date.getFullYear()}
-        <button onClick={() => this.props.changeDate(1)} className="dateControlButton">
+        <button onClick={() => props.changeDate(1)} className="dateControlButton">
           <FontAwesomeIcon icon="angle-right" />
         </button>
-        <button onClick={() => this.props.changeDate(7)} className="dateControlButton">
+        <button onClick={() => props.changeDate(7)} className="dateControlButton">
           <FontAwesomeIcon icon="angle-double-right" />
         </button>
       </div>
     );
-  }
 }
 
 export default DateDisplay;
