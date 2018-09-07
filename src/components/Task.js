@@ -5,7 +5,6 @@ function selectText(e) {
 }
 
 function Task(props) {
-
     return (
       <form className="task" >
         <input type="checkbox"  className="checkbox" onChange={(e) => props.updateTaskStatus(e,props.taskID)}/>
