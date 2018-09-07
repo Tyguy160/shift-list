@@ -1,32 +1,24 @@
 import React, { Component } from 'react';
 
-class Task extends Component {
-  constructor(props) {
-    super(props);
+function selectText(e) {
+  e.target.select();
+}
 
-    this.state = {
-      id: props.id,
-    };
-  }
+function Task(props) {
 
-  selectText(e) {
-    e.target.select();
-  }
-
-  render() {
     return (
-      <form className="task" id={this.props.taskID}>
-        <input type="checkbox"  className="checkbox" onChange={(e) =>this.props.updateTaskStatus(e,this.props.taskID)}/>
+      <form className="task" >
+        <input type="checkbox"  className="checkbox" onChange={(e) => props.updateTaskStatus(e,props.taskID)}/>
         <input
           type="text-field"
-          defaultValue="Enter task here..."
-          onFocus={this.selectText}
+          value={(props.taskDescription) ? `Enter task here...` : props.taskDescription}
+          defaultValue={`Enter task here...`}
+          onFocus={(e) => selectText(e)}
           className="taskDescription"
-          onChange={(e) =>this.props.updateTaskDescription(e, this.props.taskID)}
+          onChange={(e) => props.updateTaskDescription(e, props.taskID)}
         />
       </form>
     );
-  }
 }
 
 export default Task;

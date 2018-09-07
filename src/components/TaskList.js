@@ -48,13 +48,23 @@ function TaskList(props) {
   // }
     return (
       <div>
-        {
-          /* {props.currentList.taskDescription.map(task => (
+        {props.list[props.currentDate].map((task, index) => (
           <Task
-            key={task.toString()}
-            updateTaskStatus={this.updateTaskStatus}
-            taskID={task.taskID}
-            updateTaskDescription={this.updateTaskDescription}
+          key={index}
+          taskID={index}
+          taskDescription={task.taskDescription}
+          taskStatus={task.taskStatus}
+          updateTaskStatus={props.updateTaskStatus}
+          updateTaskDescription={props.updateTaskDescription}
+          />
+
+        ))}
+        {/* {props.list.map(task => (
+          <Task
+            // key={task.toString()}
+            // updateTaskStatus={this.updateTaskStatus}
+            // taskID={task.taskID}
+            // updateTaskDescription={this.updateTaskDescription}
           />
         ))} */}
         <button onClick={() => props.addTask()} className="addTask">

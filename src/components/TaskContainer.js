@@ -8,21 +8,24 @@ class TaskContainer extends Component {
 
     this.state = {
       lists: [],
-      currentList: [],
       currentDate: new Date(
         new Date().getFullYear(),
         new Date().getMonth(),
         new Date().getDate()
       ),
     };
+
+    this.addTask = this.addTask.bind(this);
+    this.updateTaskDescription = this.updateTaskDescription.bind(this);
+    this.updateTaskStatus = this.updateTaskStatus.bind(this);
   }
 
   // Handles incrementing or decrementing days
   changeDate = days => {
     console.log(`Changed date by ${days} days`);
-
+    console.log(this.state);
     // Pull the current date from state
-    const newDate = new Date(this.state.currentDate);
+    const newDate = this.state.currentDate;
     console.log(
       `Before change date: ${this.state.currentDate.toLocaleDateString()}`
     );
@@ -36,11 +39,11 @@ class TaskContainer extends Component {
 
     // Add the new date to the list of dates
     if (!this.state.lists.hasOwnProperty(newDate.toString())) {
-      this.addDate(newDate.toString());
+      this.addDate(newDate);
     }
 
     // Add the day's list to the list array
-    this.addList();
+    // this.addList();
   };
 
   // Change the current date to the new date
@@ -57,18 +60,13 @@ class TaskContainer extends Component {
     );
   };
 
-  // If the date is not in the state's list of dates, add it in
+  // Add a date into the list
   addDate = date => {
     this.setState(
       {
         lists: {
           ...this.state.lists,
-          [date]: [
-            {
-              task: '',
-              status: false,
-            },
-          ],
+          [date]: [],
         },
       },
       () => {
@@ -82,10 +80,48 @@ class TaskContainer extends Component {
 
   addTask() {
     console.log('Added task');
+    const date = this.state.currentDate.toString();
+    this.setState({
+      lists: {
+        ...this.state.lists,
+        [date]: [
+          ...this.state.lists[date],
+          {
+            task: '',
+            status: false,
+          },
+        ],
+      },
+    });
   }
 
-  addList() {
-    console.log('Added new list');
+  updateTaskStatus(e, taskID) {
+    let taskStatus = JSON.parse(
+      JSON.stringify(this.state.lists[this.state.currentDate])
+    );
+    const date = this.state.currentDate;
+    taskStatus[taskID].status = e.target.checked;
+    this.setState({
+      lists: {
+        ...this.state.lists,
+        [date]: [...taskStatus],
+      },
+    });
+  }
+
+  updateTaskDescription(e, taskID) {
+    console.log('Updated task description');
+    let taskDescription = JSON.parse(
+      JSON.stringify(this.state.lists[this.state.currentDate])
+    );
+    const date = this.state.currentDate;
+    taskDescription[taskID].task = e.target.value;
+    this.setState({
+      lists: {
+        ...this.state.lists,
+        [date]: [...taskDescription],
+      },
+    });
   }
 
   setCurrentList = list => {
@@ -97,9 +133,8 @@ class TaskContainer extends Component {
   };
 
   // Before mounting the component, initialize the tasklist
-  componentDidMount() {
-    const date = this.state.currentDate.toString();
-    this.addDate(date);
+  componentWillMount() {
+    this.addDate(this.state.currentDate);
   }
 
   render() {
@@ -116,10 +151,11 @@ class TaskContainer extends Component {
         <br />
         <TaskList
           className="taskList"
-          currentList={this.state.currentList}
-          lists={this.state.lists}
-          setCurrentList={this.setCurrentList}
+          list={this.state.lists}
+          currentDate={this.state.currentDate}
           addTask={this.addTask}
+          updateTaskDescription={this.updateTaskDescription}
+          updateTaskStatus={this.updateTaskStatus}
         />
       </div>
     );
