@@ -8,8 +8,8 @@ function TaskList(props) {
           <Task
           key={index}
           taskID={index}
-          taskDescription={task.taskDescription}
-          taskStatus={task.taskStatus}
+          taskDescription={task.task}
+          taskStatus={task.status}
           updateTaskStatus={props.updateTaskStatus}
           updateTaskDescription={props.updateTaskDescription}
           />
