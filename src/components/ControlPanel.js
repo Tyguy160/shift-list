@@ -12,10 +12,11 @@ library.add(
   faStepForward,
   faDownload,
 );
+
 function ControlPanel(props) {
   return (
     <div>
-      <button className="controlPanelButton" onClick={e => console.log(e)}>
+      <button className="controlPanelButton" onClick={(e) => props.shiftIncomplete()}>
         <FontAwesomeIcon icon="step-forward" />
       </button>
       <button className="controlPanelButton" onClick={e => console.log(e)}>

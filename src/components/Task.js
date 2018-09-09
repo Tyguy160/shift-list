@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function selectText(e) {
   e.target.select();
@@ -15,7 +15,6 @@ function Task(props) {
         <input
           type="text-field"
           value={(props.taskDescription) ? props.taskDescription : `Enter task here...`}
-          defaultValue={`Enter task here...`}
           onFocus={(e) => selectText(e)}
           className="taskDescription"
           onChange={(e) => props.updateTaskDescription(e, props.taskID)}

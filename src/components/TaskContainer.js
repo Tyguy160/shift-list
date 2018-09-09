@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DateDisplay from './DateDisplay';
 import TaskList from './TaskList';
+import ControlPanel from './ControlPanel';
 
 class TaskContainer extends Component {
   constructor(props) {
@@ -18,21 +19,16 @@ class TaskContainer extends Component {
     this.addTask = this.addTask.bind(this);
     this.updateTaskDescription = this.updateTaskDescription.bind(this);
     this.updateTaskStatus = this.updateTaskStatus.bind(this);
+    this.shiftIncomplete = this.shiftIncomplete.bind(this);
   }
 
   // Handles incrementing or decrementing days
   changeDate = days => {
-    console.log(`Changed date by ${days} days`);
-    console.log(this.state);
     // Pull the current date from state
     const newDate = this.state.currentDate;
-    console.log(
-      `Before change date: ${this.state.currentDate.toLocaleDateString()}`
-    );
 
     // Add or sub days from current date
     newDate.setDate(newDate.getDate() + days);
-    // console.log(`After change date: ${newDate.toLocaleDateString()}`);
 
     // Update state with new currentDate
     this.setCurrentDate(newDate);
@@ -41,45 +37,26 @@ class TaskContainer extends Component {
     if (!this.state.lists.hasOwnProperty(newDate.toString())) {
       this.addDate(newDate);
     }
-
-    // Add the day's list to the list array
-    // this.addList();
   };
 
   // Change the current date to the new date
   setCurrentDate = date => {
-    this.setState(
-      {
-        currentDate: date,
-      },
-      () => {
-        console.log(
-          `Current date set to ${this.state.currentDate.toLocaleDateString()}`
-        );
-      }
-    );
+    this.setState({
+      currentDate: date,
+    });
   };
 
   // Add a date into the list
   addDate = date => {
-    this.setState(
-      {
-        lists: {
-          ...this.state.lists,
-          [date]: [],
-        },
+    this.setState({
+      lists: {
+        ...this.state.lists,
+        [date]: [],
       },
-      () => {
-        console.log(this.state);
-        // Update current task list to show date's task list
-        // console.log(this.state.lists[this.state.dates.indexOf(date)]);
-        // this.setCurrentList(this.state.lists[this.state.dates.indexOf(date)]);
-      }
-    );
+    });
   };
 
   addTask() {
-    console.log('Added task');
     const date = this.state.currentDate.toString();
     this.setState({
       lists: {
@@ -110,7 +87,6 @@ class TaskContainer extends Component {
   }
 
   updateTaskDescription(e, taskID) {
-    console.log('Updated task description');
     let taskDescription = JSON.parse(
       JSON.stringify(this.state.lists[this.state.currentDate])
     );
@@ -125,12 +101,62 @@ class TaskContainer extends Component {
   }
 
   setCurrentList = list => {
-    console.log(`Updated list`);
-    console.log(list);
     this.setState({
       currentList: list,
     });
   };
+
+  shiftIncomplete() {
+    const date = this.state.currentDate;
+    const datePlusOne = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate() + 1
+    );
+
+    // Get list of incomplete tasks
+    let incompleteTasks = JSON.parse(
+      JSON.stringify(this.state.lists[this.state.currentDate])
+    ).filter(task => task.status === false);
+
+    // Get list of complete tasks
+    let completeTasks = JSON.parse(
+      JSON.stringify(this.state.lists[this.state.currentDate])
+    ).filter(task => task.status === true);
+
+    // Update current day with list of tasks that are complete
+    this.setState(
+      {
+        lists: {
+          ...this.state.lists,
+          [date]: [...completeTasks],
+        },
+      },
+      () => {
+        // Check if the next day does not exist
+        if (!this.state.lists.hasOwnProperty(datePlusOne.toString())) {
+          this.setState({
+            lists: {
+              ...this.state.lists,
+              [datePlusOne]: [...incompleteTasks],
+            },
+          });
+        }
+        // Update next day with add-on of tasks from today that were incomplete
+        else {
+          this.setState({
+            lists: {
+              ...this.state.lists,
+              [datePlusOne]: [
+                ...this.state.lists[datePlusOne],
+                ...incompleteTasks,
+              ],
+            },
+          });
+        }
+      }
+    );
+  }
 
   // Before mounting the component, initialize the tasklist
   componentWillMount() {
@@ -156,6 +182,11 @@ class TaskContainer extends Component {
           addTask={this.addTask}
           updateTaskDescription={this.updateTaskDescription}
           updateTaskStatus={this.updateTaskStatus}
+        />
+        <br />
+        <ControlPanel
+          className="controlPanel"
+          shiftIncomplete={this.shiftIncomplete}
         />
       </div>
     );
