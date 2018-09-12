@@ -1,0 +1,26 @@
+.task {
+  display: grid;
+  grid-template-columns: 1fr 50px 20% 1fr;
+  grid-template-areas: "leftPad taskStatus taskDescription rightPad";
+}
+
+.taskStatus {
+  grid-area: taskStatus;
+  display: grid;
+  align-self: center;
+}
+
+.pretty {
+  display: grid;
+  justify-self: center;
+  align-items: center;
+  margin: 0em !important;
+}
+
+.taskDescription {
+  grid-area: taskDescription;
+  align-self: center;
+  font-size: 24px;
+  border-color: transparent;
+  resize: none;
+}

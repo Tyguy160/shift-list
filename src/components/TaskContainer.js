@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import DateDisplay from './DateDisplay';
-import TaskList from './TaskList';
-import ControlPanel from './ControlPanel';
+import React, { Component } from "react";
+import DateDisplay from "./DateDisplay";
+import TaskList from "./TaskList";
+import ControlPanel from "./ControlPanel";
+import "../styles/TaskContainer.css";
 
 class TaskContainer extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class TaskContainer extends Component {
         new Date().getFullYear(),
         new Date().getMonth(),
         new Date().getDate()
-      ),
+      )
     };
 
     this.addTask = this.addTask.bind(this);
@@ -42,7 +43,7 @@ class TaskContainer extends Component {
   // Change the current date to the new date
   setCurrentDate = date => {
     this.setState({
-      currentDate: date,
+      currentDate: date
     });
   };
 
@@ -51,8 +52,8 @@ class TaskContainer extends Component {
     this.setState({
       lists: {
         ...this.state.lists,
-        [date]: [],
-      },
+        [date]: []
+      }
     });
   };
 
@@ -64,11 +65,11 @@ class TaskContainer extends Component {
         [date]: [
           ...this.state.lists[date],
           {
-            task: '',
-            status: false,
-          },
-        ],
-      },
+            task: "",
+            status: false
+          }
+        ]
+      }
     });
   }
 
@@ -81,8 +82,8 @@ class TaskContainer extends Component {
     this.setState({
       lists: {
         ...this.state.lists,
-        [date]: [...taskStatus],
-      },
+        [date]: [...taskStatus]
+      }
     });
   }
 
@@ -95,14 +96,14 @@ class TaskContainer extends Component {
     this.setState({
       lists: {
         ...this.state.lists,
-        [date]: [...taskDescription],
-      },
+        [date]: [...taskDescription]
+      }
     });
   }
 
   setCurrentList = list => {
     this.setState({
-      currentList: list,
+      currentList: list
     });
   };
 
@@ -129,8 +130,8 @@ class TaskContainer extends Component {
       {
         lists: {
           ...this.state.lists,
-          [date]: [...completeTasks],
-        },
+          [date]: [...completeTasks]
+        }
       },
       () => {
         // Check if the next day does not exist
@@ -138,8 +139,8 @@ class TaskContainer extends Component {
           this.setState({
             lists: {
               ...this.state.lists,
-              [datePlusOne]: [...incompleteTasks],
-            },
+              [datePlusOne]: [...incompleteTasks]
+            }
           });
         }
         // Update next day with add-on of tasks from today that were incomplete
@@ -149,9 +150,9 @@ class TaskContainer extends Component {
               ...this.state.lists,
               [datePlusOne]: [
                 ...this.state.lists[datePlusOne],
-                ...incompleteTasks,
-              ],
-            },
+                ...incompleteTasks
+              ]
+            }
           });
         }
       }
@@ -165,7 +166,7 @@ class TaskContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div className="taskContainer">
         <DateDisplay
           className="dateDisplay"
           currentDate={this.state.currentDate}
