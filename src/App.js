@@ -10,10 +10,12 @@ class App extends Component {
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1 className="App-title">
-            My Shift List{" "}
-            <span role="img" aria-label="Poop">
-              💩
-            </span>
+            My Shift List
+            <div className="App-logo">
+              <span role="img" aria-label="Poop">
+                💩
+              </span>
+            </div>
           </h1>
         </header>
         <TaskContainer className="taskContainer" />
