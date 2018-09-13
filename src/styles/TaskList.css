@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr minmax(450px, 0.65fr) 1fr;
+  grid-template-columns: 1fr minmax(280px, 0.65fr) 1fr;
   grid-template-areas: "leftPad taskList rightPad";
 }
 
