@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "Quicksand", sans-serif;
 }
 
 .App-logo {
@@ -13,14 +14,16 @@
   padding: 20px;
   margin-bottom: 20px;
   color: white;
+  display: grid;
+  align-content: center;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2.5em;
 }
 
 .App-intro {
-  font-size: large;
+  /* font-size: large; */
 }
 
 @keyframes App-logo-spin {

@@ -1,0 +1,47 @@
+.controlPanel {
+  font-weight: 200;
+  font-size: 28px;
+  display: grid;
+  grid-template-areas: "leftPad addTask shiftTasks printTasks downloadTasks";
+  grid-template-columns: 1fr 50px 50px 50px 50px 1fr;
+}
+
+.addTask {
+  grid-area: addTask;
+}
+
+.shiftTasks {
+  grid-area: shiftTasks;
+}
+
+.printTasks {
+  grid-area: printTasks;
+}
+
+.downloadTasks {
+  grid-area: downloadTasks;
+}
+
+.reverseTime {
+  grid-area: backInTime;
+  display: flex;
+}
+
+.date {
+  grid-area: date;
+}
+
+.forwardTime {
+  grid-area: forwardInTime;
+  display: flex;
+}
+
+.controlPanelButton {
+  height: 40px;
+  width: 40px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -21,6 +21,7 @@ class TaskContainer extends Component {
     this.updateTaskDescription = this.updateTaskDescription.bind(this);
     this.updateTaskStatus = this.updateTaskStatus.bind(this);
     this.shiftIncomplete = this.shiftIncomplete.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   // Handles incrementing or decrementing days
@@ -159,6 +160,20 @@ class TaskContainer extends Component {
     );
   }
 
+  // Delete task that the user clicks on
+  deleteTask(e, taskID) {
+    e.preventDefault();
+    const date = this.state.currentDate;
+    let tasks = JSON.parse(JSON.stringify(this.state.lists[date]));
+    tasks.splice(taskID, 1);
+    this.setState({
+      lists: {
+        ...this.state.lists,
+        [date]: [...tasks]
+      }
+    });
+  }
+
   // Before mounting the component, initialize the tasklist
   componentWillMount() {
     this.addDate(this.state.currentDate);
@@ -183,11 +198,13 @@ class TaskContainer extends Component {
           addTask={this.addTask}
           updateTaskDescription={this.updateTaskDescription}
           updateTaskStatus={this.updateTaskStatus}
+          deleteTask={this.deleteTask}
         />
         <br />
         <ControlPanel
           className="controlPanel"
           shiftIncomplete={this.shiftIncomplete}
+          addTask={this.addTask}
         />
       </div>
     );

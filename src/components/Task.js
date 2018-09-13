@@ -35,17 +35,23 @@ function Task(props) {
         className="taskDescription"
         // type="text-area"
         rows="1"
-        placeholder="Enter task here…"
+        placeholder="Enter task here..."
         value={props.taskDescription}
         onFocus={e => selectText(e)}
         onKeyPress={e => {
-          if (e.which == 13) {
+          if (e.which === 13) {
             e.preventDefault();
             props.addTask();
           }
         }}
         onChange={e => props.updateTaskDescription(e, props.taskID)}
       />
+      <button
+        className="deleteButton"
+        onClick={e => props.deleteTask(e, props.taskID)}
+      >
+        <i className="icon mdi mdi-delete mdi-24px" />
+      </button>
     </form>
   );
 }

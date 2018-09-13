@@ -1,29 +1,33 @@
-import React from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPrint,
-  faStepForward,
-  faDownload,
-} from '@fortawesome/free-solid-svg-icons';
-
-library.add(
-  faPrint,
-  faStepForward,
-  faDownload,
-);
+import React from "react";
+import "../../node_modules/mdi/css/materialdesignicons.css";
+import "../styles/ControlPanel.css";
 
 function ControlPanel(props) {
   return (
-    <div>
-      <button className="controlPanelButton" onClick={(e) => props.shiftIncomplete()}>
-        <FontAwesomeIcon icon="step-forward" />
+    <div className="controlPanel">
+      <button
+        onClick={() => props.addTask()}
+        className="addTask controlPanelButton"
+      >
+        <i className="icon mdi mdi-plus mdi-24px" />
       </button>
-      <button className="controlPanelButton" onClick={e => console.log(e)}>
-        <FontAwesomeIcon icon="print" />
+      <button
+        className="controlPanelButton shiftTasks"
+        onClick={() => props.shiftIncomplete()}
+      >
+        <i className="icon mdi mdi-arrow-collapse-right mdi-24px" />
       </button>
-      <button className="controlPanelButton" onClick={e => console.log(e)}>
-        <FontAwesomeIcon icon="download" />
+      <button
+        className="controlPanelButton printTasks"
+        onClick={e => console.log(e)}
+      >
+        <i className="icon mdi mdi-printer mdi-24px" />
+      </button>
+      <button
+        className="controlPanelButton downloadTasks"
+        onClick={e => console.log(e)}
+      >
+        <i className="icon mdi mdi-download mdi-24px" />
       </button>
     </div>
   );

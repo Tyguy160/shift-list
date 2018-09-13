@@ -1,0 +1,43 @@
+.dateDisplay {
+  font-weight: 200;
+  font-size: 28px;
+  display: grid;
+  grid-template-areas: "leftPad backInTime date forwardInTime rightPad";
+  grid-template-columns: 1fr 100px minmax(425px, 0.2fr) 100px 1fr;
+}
+
+.reverseTime {
+  grid-area: backInTime;
+  display: flex;
+}
+
+.date {
+  grid-area: date;
+}
+
+.forwardTime {
+  grid-area: forwardInTime;
+  display: flex;
+}
+
+.dateControlButton {
+  height: 40px;
+  width: 40px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 625px) {
+  .bigStepBackward {
+    display: none;
+  }
+  .dateDisplay {
+    grid-template-columns: 1fr 40px minmax(400px, 0.2fr) 40px 1fr;
+  }
+  .bigStepForward {
+    display: none;
+  }
+}
