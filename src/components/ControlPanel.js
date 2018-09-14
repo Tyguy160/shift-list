@@ -6,7 +6,7 @@ function ControlPanel(props) {
   return (
     <div className="controlPanel">
       <button
-        onClick={() => props.addTask()}
+        onClick={e => props.addTask(e)}
         className="addTask controlPanelButton"
       >
         <i className="icon mdi mdi-plus mdi-24px" />

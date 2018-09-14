@@ -3,6 +3,7 @@ import DateDisplay from "./DateDisplay";
 import TaskList from "./TaskList";
 import ControlPanel from "./ControlPanel";
 import "../styles/TaskContainer.css";
+import ReactDOM from "react-dom";
 
 class TaskContainer extends Component {
   constructor(props) {
@@ -58,20 +59,46 @@ class TaskContainer extends Component {
     });
   };
 
-  addTask() {
+  // Add a new task to the state
+  addTask(e) {
     const date = this.state.currentDate.toString();
-    this.setState({
-      lists: {
-        ...this.state.lists,
-        [date]: [
-          ...this.state.lists[date],
-          {
-            task: "",
-            status: false
-          }
-        ]
+    let event = e.currentTarget;
+    this.setState(
+      {
+        lists: {
+          ...this.state.lists,
+          [date]: [
+            ...this.state.lists[date],
+            {
+              task: "",
+              status: false
+            }
+          ]
+        }
+      },
+      () => {
+        // Access the task list from DOM
+        let taskList = ReactDOM.findDOMNode(event.parentNode.parentNode);
+
+        // Pull in a node list of all descriptions
+        let taskDescriptions = taskList.querySelectorAll(".taskDescription");
+
+        // Get the task description of the last added task
+        let lastAddedTask = taskDescriptions[taskDescriptions.length - 1];
+
+        // Focus on the last added task
+        lastAddedTask.focus();
       }
-    });
+      // e => {
+      //   console.log(e);
+      //   if (e) {
+      //     console.log(
+      //       e.target.parentNode.parentNode.lastChild.childNodes.item(1)
+      //     );
+      //     e.target.parentNode.parentNode.lastChild.childNodes.item(1).focus();
+      //   }
+      // }
+    );
   }
 
   updateTaskStatus(e, taskID) {

@@ -14,7 +14,6 @@ function Task(props) {
       className="task"
       onSubmit={e => {
         e.preventDefault();
-        props.addTask();
       }}
     >
       <div className="taskStatus">
@@ -41,7 +40,7 @@ function Task(props) {
         onKeyPress={e => {
           if (e.which === 13) {
             e.preventDefault();
-            props.addTask();
+            props.addTask(e);
           }
         }}
         onChange={e => props.updateTaskDescription(e, props.taskID)}
