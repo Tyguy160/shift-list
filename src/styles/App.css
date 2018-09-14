@@ -5,6 +5,11 @@
   font-family: "Quicksand", sans-serif;
 }
 
+/* Disable double-click to zoom on mobile (iOS) */
+button {
+  touch-action: manipulation;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 10s linear;
   margin-top: 5px;

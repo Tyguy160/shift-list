@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: auto auto minmax(auto, 1fr);
+  grid-template-areas:
+    "dateDisplay"
+    "controlPanel"
+    "taskContainer";
+  max-height: 80vh;
+}
+
+.dateDisplay {
+  grid-area: dateDisplay;
+}
+
+.controlPanel {
+  grid-area: controlPanel;
+}
+
+.taskContainer {
+  grid-area: taskContainer;
+  overflow: scroll;
+}

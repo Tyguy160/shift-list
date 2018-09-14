@@ -1,4 +1,4 @@
-.container {
+.taskContainer {
   display: grid;
   grid-template-columns: 1fr minmax(280px, 0.65fr) 1fr;
   grid-template-areas: "leftPad taskList rightPad";
@@ -6,6 +6,5 @@
 
 .taskList {
   grid-area: taskList;
-  max-height: 65vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }

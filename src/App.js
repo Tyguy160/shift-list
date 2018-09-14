@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TaskContainer from "./components/TaskContainer";
+import Container from "./components/Container";
 // import logo from './logo.svg';
 import "./styles/App.css";
 
@@ -18,7 +18,7 @@ class App extends Component {
             </div>
           </h1>
         </header>
-        <TaskContainer className="taskContainer" />
+        <Container className="container" />
       </div>
     );
   }

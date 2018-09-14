@@ -4,7 +4,7 @@ import "../styles/TaskList.css";
 
 function TaskList(props) {
   return (
-    <div className="container">
+    <div className="taskContainer">
       <div className="taskList">
         {props.list[props.currentDate].map((task, index) => (
           <Task

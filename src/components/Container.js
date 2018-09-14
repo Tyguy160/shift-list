@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import DateDisplay from "./DateDisplay";
 import TaskList from "./TaskList";
 import ControlPanel from "./ControlPanel";
-import "../styles/TaskContainer.css";
+import "../styles/Container.css";
 import ReactDOM from "react-dom";
 
-class TaskContainer extends Component {
+class Container extends Component {
   constructor(props) {
     super(props);
 
@@ -89,16 +89,9 @@ class TaskContainer extends Component {
         // Focus on the last added task
         lastAddedTask.focus();
       }
-      // e => {
-      //   console.log(e);
-      //   if (e) {
-      //     console.log(
-      //       e.target.parentNode.parentNode.lastChild.childNodes.item(1)
-      //     );
-      //     e.target.parentNode.parentNode.lastChild.childNodes.item(1).focus();
-      //   }
-      // }
     );
+    // Update local storage with new state
+    localStorage.setItem("lists", JSON.stringify(this.state.lists));
   }
 
   updateTaskStatus(e, taskID) {
@@ -107,12 +100,18 @@ class TaskContainer extends Component {
     );
     const date = this.state.currentDate;
     taskStatus[taskID].status = e.target.checked;
-    this.setState({
-      lists: {
-        ...this.state.lists,
-        [date]: [...taskStatus]
+    this.setState(
+      {
+        lists: {
+          ...this.state.lists,
+          [date]: [...taskStatus]
+        }
+      },
+      () => {
+        // Update local storage with new state
+        localStorage.setItem("lists", JSON.stringify(this.state.lists));
       }
-    });
+    );
   }
 
   updateTaskDescription(e, taskID) {
@@ -121,12 +120,18 @@ class TaskContainer extends Component {
     );
     const date = this.state.currentDate;
     taskDescription[taskID].task = e.target.value;
-    this.setState({
-      lists: {
-        ...this.state.lists,
-        [date]: [...taskDescription]
+    this.setState(
+      {
+        lists: {
+          ...this.state.lists,
+          [date]: [...taskDescription]
+        }
+      },
+      () => {
+        // Update local storage with new state
+        localStorage.setItem("lists", JSON.stringify(this.state.lists));
       }
-    });
+    );
   }
 
   setCurrentList = list => {
@@ -164,24 +169,36 @@ class TaskContainer extends Component {
       () => {
         // Check if the next day does not exist
         if (!this.state.lists.hasOwnProperty(datePlusOne.toString())) {
-          this.setState({
-            lists: {
-              ...this.state.lists,
-              [datePlusOne]: [...incompleteTasks]
+          this.setState(
+            {
+              lists: {
+                ...this.state.lists,
+                [datePlusOne]: [...incompleteTasks]
+              }
+            },
+            () => {
+              // Update local storage with new state
+              localStorage.setItem("lists", JSON.stringify(this.state.lists));
             }
-          });
+          );
         }
         // Update next day with add-on of tasks from today that were incomplete
         else {
-          this.setState({
-            lists: {
-              ...this.state.lists,
-              [datePlusOne]: [
-                ...this.state.lists[datePlusOne],
-                ...incompleteTasks
-              ]
+          this.setState(
+            {
+              lists: {
+                ...this.state.lists,
+                [datePlusOne]: [
+                  ...this.state.lists[datePlusOne],
+                  ...incompleteTasks
+                ]
+              }
+            },
+            () => {
+              // Update local storage with new state
+              localStorage.setItem("lists", JSON.stringify(this.state.lists));
             }
-          });
+          );
         }
       }
     );
@@ -193,22 +210,33 @@ class TaskContainer extends Component {
     const date = this.state.currentDate;
     let tasks = JSON.parse(JSON.stringify(this.state.lists[date]));
     tasks.splice(taskID, 1);
-    this.setState({
-      lists: {
-        ...this.state.lists,
-        [date]: [...tasks]
+    this.setState(
+      {
+        lists: {
+          ...this.state.lists,
+          [date]: [...tasks]
+        }
+      },
+      () => {
+        // Update local storage with new state
+        localStorage.setItem("lists", JSON.stringify(this.state.lists));
       }
-    });
+    );
   }
 
   // Before mounting the component, initialize the tasklist
   componentWillMount() {
-    this.addDate(this.state.currentDate);
+    const cachedState = localStorage.getItem("lists");
+    if (cachedState) {
+      this.setState({ lists: JSON.parse(cachedState) });
+    } else {
+      this.addDate(this.state.currentDate);
+    }
   }
 
   render() {
     return (
-      <div className="taskContainer">
+      <div className="container">
         <DateDisplay
           className="dateDisplay"
           currentDate={this.state.currentDate}
@@ -217,7 +245,11 @@ class TaskContainer extends Component {
           addDate={this.addDate}
           setCurrentDate={this.setCurrentDate}
         />
-        <br />
+        <ControlPanel
+          className="controlPanel"
+          shiftIncomplete={this.shiftIncomplete}
+          addTask={this.addTask}
+        />
         <TaskList
           className="taskList"
           list={this.state.lists}
@@ -227,15 +259,9 @@ class TaskContainer extends Component {
           updateTaskStatus={this.updateTaskStatus}
           deleteTask={this.deleteTask}
         />
-        <br />
-        <ControlPanel
-          className="controlPanel"
-          shiftIncomplete={this.shiftIncomplete}
-          addTask={this.addTask}
-        />
       </div>
     );
   }
 }
 
-export default TaskContainer;
+export default Container;
