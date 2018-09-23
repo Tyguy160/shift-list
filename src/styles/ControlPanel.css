@@ -3,8 +3,8 @@
   font-size: 28px;
   display: grid;
   grid-column-gap: 10px;
-  grid-template-areas: "leftPad addTask shiftTasks printTasks downloadTasks";
-  grid-template-columns: 1fr 50px 50px 50px 50px 1fr;
+  grid-template-areas: 'leftPad addTask shiftTasks rightPad';
+  grid-template-columns: 1fr 50px 50px 1fr;
 }
 
 .addTask {

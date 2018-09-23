@@ -3,9 +3,9 @@
   grid-gap: 20px;
   grid-template-rows: auto auto minmax(auto, 1fr);
   grid-template-areas:
-    "dateDisplay"
-    "controlPanel"
-    "taskContainer";
+    'dateDisplay'
+    'controlPanel'
+    'taskContainer';
   max-height: 80vh;
 }
 
@@ -19,5 +19,5 @@
 
 .taskContainer {
   grid-area: taskContainer;
-  overflow: scroll;
+  overflow: hidden;
 }

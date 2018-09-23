@@ -1,8 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700");
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 
 .App {
   text-align: center;
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  overflow: hidden;
 }
 
 /* Disable double-click to zoom on mobile (iOS) */
@@ -12,7 +13,9 @@ button {
 
 .App-logo {
   animation: App-logo-spin infinite 10s linear;
-  margin-top: 5px;
+  margin-top: 10px;
+  text-align: center;
+  transform-origin: center center;
 }
 
 .App-header {
@@ -27,10 +30,6 @@ button {
 
 .App-title {
   font-size: 1.5em;
-}
-
-.App-intro {
-  /* font-size: large; */
 }
 
 @keyframes App-logo-spin {

@@ -1,11 +1,16 @@
 import React from "react";
 import Task from "./Task";
 import "../styles/TaskList.css";
-
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 function TaskList(props) {
+  const options = {
+    suppressScrollX: true,
+  }
   return (
     <div className="taskContainer">
       <div className="taskList">
+      <PerfectScrollbar option={options} supressScrollY={true}>
         {props.list[props.currentDate].map((task, index) => (
           <Task
             key={index}
@@ -18,6 +23,7 @@ function TaskList(props) {
             deleteTask={props.deleteTask}
           />
         ))}
+    </PerfectScrollbar>
       </div>
     </div>
   );

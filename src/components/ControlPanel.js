@@ -17,7 +17,9 @@ function ControlPanel(props) {
       >
         <i className="icon mdi mdi-arrow-collapse-right mdi-24px" />
       </button>
-      <button
+      {/* Future improvement: Add button to print all tasks and
+      button to download a .txt file with list of tasks */}
+      {/* <button
         className="controlPanelButton printTasks"
         onClick={e => console.log(e)}
       >
@@ -28,7 +30,7 @@ function ControlPanel(props) {
         onClick={e => console.log(e)}
       >
         <i className="icon mdi mdi-download mdi-24px" />
-      </button>
+      </button> */}
     </div>
   );
 }
